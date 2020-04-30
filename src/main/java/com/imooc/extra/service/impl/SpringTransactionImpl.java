@@ -99,6 +99,7 @@ public class SpringTransactionImpl implements ISpringTransaction {
      * <h2>Rollback Only</h2>
      * org.springframework.transaction.UnexpectedRollbackException:
      * Transaction silently rolled back because it has been marked as rollback-only
+     * 有任何一个transaction  异常 则整个 回滚   传播机制 合成transaction
      * */
     @Override
     @Transactional
@@ -111,6 +112,7 @@ public class SpringTransactionImpl implements ISpringTransaction {
         } catch (Exception ex) {
             ex.printStackTrace();
             throw ex;
+            // 若此处throw不抛出异常， 则rollbackonlycanrollback  无法捕捉异常 会 自动产生 transaction 处理的异常 造成没有加入新数据 而不是roll back生效
         }
     }
 
